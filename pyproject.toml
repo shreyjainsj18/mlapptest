@@ -1,12 +1,13 @@
 [tool.black]
 line-length = 120
+include = '\.pyi?$'
 exclude = '''
 /(
     \.git
+  | \.github
   | \.venv
   | venv
   | __pycache__
-  | \.pytest_cache
   | .*\.pkl
   | .*\.md
   | .*\.txt
