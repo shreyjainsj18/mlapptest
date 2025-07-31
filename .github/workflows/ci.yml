@@ -19,7 +19,7 @@ jobs:
           pip install pytest flake8 black
 
       - name: Auto-format with Black
-        run: black --line-length 120 --include '\.py$' .
+        run: black --line-length 120 app.py model.py tests/
 
       - name: Lint
         run: flake8 . --max-line-length 120
