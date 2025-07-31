@@ -1,0 +1,41 @@
+name: CI + CD
+
+on:
+  push:
+    branches: [ main ]     # deploy only from main
+  pull_request:            # still run tests on PRs
+  workflow_dispatch:       # allow manual runs in Actions UI
+
+jobs:
+  build-test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # ---------- CI ----------
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install -r requirements.txt
+          pip install pytest flake8
+
+      - name: Lint
+        run: flake8 . --max-line-length 120
+
+      - name: Run tests
+        run: pytest -q
+
+      # ---------- (optional) build image locally to catch Dockerfile typos ----
+      - name: Docker build test
+        run: docker build -t dummy-img .
+
+      # ---------- CD ----------
+      - name: Trigger Render deploy
+        if: success()                       # only when CI is green
+        uses: distributhor/workflow-webhook@v3
+        with:
+          url: ${{ secrets.RENDER_DEPLOY_HOOK }}
+          method: POST
+          payload: "{}"
