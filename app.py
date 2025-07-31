@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
 import joblib
+import os
 
 app = Flask(__name__)
-model = joblib.load("iris_model.pkl")  # Load your trained model
+
+model_path = os.path.join(os.path.dirname(__file__), "iris_model.pkl")
+model = joblib.load(model_path)
+# model = joblib.load("iris_model.pkl")  # Load your trained model
 
 # Predict (POST + GET)
 @app.route("/predict", methods=["POST", "GET"])
