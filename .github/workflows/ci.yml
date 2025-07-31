@@ -18,6 +18,9 @@ jobs:
           python -m pip install -r requirements.txt
           pip install pytest flake8 black
 
+      - name: Auto-format with Black
+        run: black --line-length 120 .
+
       - name: Lint
         run: flake8 . --max-line-length 120
 

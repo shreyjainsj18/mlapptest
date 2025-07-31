@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 120
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | venv
+  | __pycache__
+  | \.pytest_cache
+  | .*\.pkl
+  | .*\.md
+  | .*\.txt
+)/
+'''
