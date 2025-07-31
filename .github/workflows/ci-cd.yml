@@ -33,9 +33,6 @@ jobs:
 
       # ---------- CD ----------
       - name: Trigger Render deploy
-        if: success()                       # only when CI is green
-        uses: distributhor/workflow-webhook@v3
-        with:
-          url: ${{ secrets.RENDER_DEPLOY_HOOK }}
-          method: POST
-          payload: "{}"
+        if: success()
+        run: curl -fsSL -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
