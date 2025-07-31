@@ -1,2 +1,3 @@
 def test_math_works():
-    assert 2 + 2 == 4
+
+    assert 1 == 2
